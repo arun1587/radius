@@ -148,8 +148,8 @@ func GenerateSessionKeyAttributes(request *radius.Packet, appKey lorawan.AES128K
 	final = radius.LoraRadiusReply{
 		EncryptedJoinAccept: pRJABME,
 		//JoinRequest:         jrPayloadRB,
-		NwkSKey:             nwkSKeyB,
-		AppSKey:             appSKeyB,
+		NwkSKey: nwkSKeyB,
+		AppSKey: appSKeyB,
 	}
 	return nil, final
 }
@@ -158,8 +158,7 @@ func (p radiusService) RadiusHandle(request *radius.Packet) *radius.Packet {
 	// a pretty print of the request.
 	userMap := map[string]string{
 		"333738390f6e346d": "2b7e151628aed2a6abf7158809cf4f3c",
-		"33313737057e3461":"2b7e151628aed2a6abf7158809cf4f3c",
-
+		"33313737057e3461": "2b7e151628aed2a6abf7158809cf4f3c",
 	}
 
 	fmt.Printf("[Authenticate] %s\n", request.String())
@@ -207,16 +206,6 @@ func main() {
 		radius.NewClient("172.17.0.8", "Acklio"),
 	})
 	s.WithClientList(cls)
-	/*
-			Learning GO :)
-			cl1 := cls.Get("Acklio")
-			var rSecret string = cl1.GetSecret()
-			log.Println("[SECRET]", rSecret)
-
-		cl1 := cls.GetHerd()
-		var rSecret string = cl1[0].GetSecret()
-		log.Println("[SECRET]", rSecret)
-	*/
 
 	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
